@@ -1,0 +1,91 @@
+<h1>Boulette</h1>
+
+
+<div class="ion-text-center">
+<div class= "ion-justify-content-evenly">
+  <button routerLink="/" class="button-box-small">Home </button>
+  <button routerLink="/" class="button-box-small" (click)= "resetGame()">Quit </button>
+</div>
+
+  <div [ngSwitch]="currentStage">
+ 
+    <div *ngSwitchCase="'round0-intro'">
+      <h3>Number of teams</h3>
+      <input type="number" [(ngModel)]="numberOfTeams" />
+      <h3>Number of words per player</h3>
+      <input type="number" [(ngModel)]="numberOfWords" />
+      <div class ="ion-text-center">
+        <h3>Players</h3>
+        <div *ngFor="let player of players">
+          <h2>{{ player.name }}</h2>
+          <label for="teamSelect">Select Team:</label>
+          <select id="teamSelect" [(ngModel)]="player.team" (change)="assignTeam(player, player.team)">
+            <option *ngFor="let team of [].constructor(numberOfTeams); let i = index" [value]="i + 1">
+              Team {{ i + 1 }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <button class="button-box-small" (click)="chooseWords()" >Start</button>
+    </div>
+  
+      <!-- Play Stage  -->
+      <div *ngSwitchCase="'words'">
+         <app-words-boulette></app-words-boulette>
+      </div>
+
+     <div [ngSwitch]="currentStage">
+
+  <!-- Round 1 Introduction -->
+  <div *ngSwitchCase="'round1-intro'">
+    <p>ROUND 1</p>
+    <h4> here youll have to guess the words without using any words related, you have 1 minute per team </h4>
+    <button *ngIf="!gotIt" class="button-box-small" (click)="startRound()">GOT IT</button> 
+  </div>
+
+
+  <div *ngSwitchCase="'round1-play'">
+    <app-round></app-round>
+  </div>
+
+
+  <div *ngSwitchCase="'round2-intro'">
+    <p>ROUND 2</p>
+    <h4> here youll have to guess the words without using any words at all only mimics and no sound, you have 1 minute per team </h4>
+    <button *ngIf="!gotIt" (click)="startRound()" class="button-box-small">GOT IT</button>
+  </div>
+
+  <div *ngSwitchCase="'round2-play'">
+    <app-round></app-round>
+  </div>
+
+  <div *ngSwitchCase="'round3-intro'">
+    <p>ROUND 3</p>
+    <h4> here youll have to guess the words without using only one word </h4>
+    <button *ngIf="!gotIt" (click)="startRound()" class="button-box-small">GOT IT</button>
+  </div>
+
+  <div *ngSwitchCase="'round3-play'">
+    <app-round></app-round>
+  </div>
+
+
+  <div *ngSwitchCase="'round4-intro'">
+  <h2>Game Results</h2>
+  
+  <div *ngFor="let team of teamResults">
+    <h3>Team {{ team.teamNumber }}</h3>
+    <p>Total Points: {{ team.totalPoints }}</p>
+    <ul>
+      <li *ngFor="let player of team.players">
+        {{ player.name }}: {{ player.points }} points
+      </li>
+    </ul>
+  </div>
+
+  <button class="button-box-small" (click)="resetGame()">Restart Game</button>
+</div>
+ 
+  </div>
+  </div>
+

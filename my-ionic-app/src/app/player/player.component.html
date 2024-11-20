@@ -1,0 +1,34 @@
+
+<div class="ion-text-center">
+<h3>Add a New Player</h3>
+<button routerLink="/" class="button-box-small">Home </button>
+<p></p>
+<form (ngSubmit)="addPlayer()">
+  <label for="playerName">Player Name:</label>
+  <input type="text" [(ngModel)]="newPlayer.name" name="playerName" required />
+  <p></p>
+
+ 
+<label>Choose Player's Team:</label>
+<div class="team-buttons" class="ion-text-center">
+  <button
+    *ngFor="let team of [].constructor(numberOfTeams); let i = index"
+    class="team-button"
+    [class.selected]="newPlayer.team === i + 1"
+    (click)="selectTeam(i + 1)"
+  >
+    Team {{ i + 1 }}
+  </button>
+</div>
+<p style="color: red;" *ngIf="errorMessage">{{ errorMessage }}</p>
+
+</form>
+
+<h3>Current Players</h3>
+<ul>
+  <li *ngFor="let player of players">
+    <strong>{{ player.name }}</strong> - Points: {{ player.points }}, Team: {{ player.team }}, id: {{ player.id }}
+    <button (click)="removePlayer(player)" class="button-box-small">Remove</button>
+  </li>
+</ul>
+</div>

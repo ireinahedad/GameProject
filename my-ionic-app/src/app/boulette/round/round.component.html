@@ -1,0 +1,34 @@
+<div>
+  <h2>Team {{ currentTeam }}</h2>
+  <h3>{{ currentWord }}</h3>
+  <p>Time left: {{ timeLeft }} seconds</p>
+
+  <button class="button-box-small" (click)="gotWord()">Got It</button>
+  <button class="button-box-small" (click)="passWord()">Pass</button>
+
+  <div *ngIf="showResults">
+  <div *ngFor="let team of teamResults">
+    <h3>Team {{ team.teamNumber }}</h3>
+    <p>Total Points: {{ team.totalPoints }}</p>
+    <ul>
+      <li *ngFor="let player of team.players">
+        {{ player.name }}: {{ player.points }} points
+      </li>
+    </ul>
+
+    <button class="button-box-small" (click)="noShowResults()">Pass</button>
+  </div>
+  </div>
+
+  <div class="word-summary">
+    <h4>{{ guessedWords.length }) words Got Right </h4>
+    <ul>
+      <li *ngFor="let word of guessedWords">{{ word }}</li>
+    </ul>
+
+    <h4>{{ missedWords.length }} Missed Words </h4>
+    <ul>
+      <li *ngFor="let word of missedWords">{{ word }}</li>
+    </ul>
+  </div>
+</div>

@@ -1,0 +1,139 @@
+
+body {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  height: 100vh; /* Full viewport height */
+  margin: 0; /* Remove default body margin */
+  background-color: #f0f0f0; /* Optional background color */
+}
+
+.button-box {
+  width: 48%; /* Adjust width to fit two buttons per row with some space between */
+  margin-bottom: 0px; /* Space between rows */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50px;
+  text-align: center;
+  color: white;
+  font-size: 1.2em;
+}
+
+.button-box-small{
+  padding: 2%; /* Space between rows */
+  justify-content: center;
+  border-radius: 50px;
+  border-width: 20px;
+  text-align: center;
+  color: white;
+  font-size: 1.2em;
+  background-color: #D20A2E;
+}
+
+.button-box-smaller{
+  width: 10%;
+  height: 5%;
+  margin: 1%;
+  justify-content: center;
+  border-radius: 50px;
+  border-width: 10px;
+  text-align: center;
+  color: white;
+  font-size: 1.5em;
+  background-color: #9bbbe740;
+  border: 2px solid #D20A2E;
+}
+
+.button-box-small:hover {
+  background-color: #A50823; /* Darker red on hover */
+  transform: scale(1.05); /* Slightly enlarge the button */
+}
+
+.button-box:nth-child(1) {
+  height: 190px;
+  background-color: #77D935; /* Example color */
+}
+
+.button-box:nth-child(2) {
+  height: 230px;
+  background-color: #52B074; /* Example color */
+}
+
+input[type="number"] {
+  border: 2px solid #f7a072; /* Light orange border */
+  border-radius: 8px; /* Rounded corners */
+  padding: 10px; /* Space inside the input */
+  width: 5%; /* Full-width input */
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  font-size: 1.5rem; /* Adjust font size */
+  text-align: center;
+  outline: none; /* Remove default focus outline */
+}
+
+input[type="number"]:focus {
+  border-color: #ff6347; /* Highlight border when focused */
+  box-shadow: 0px 0px 8px rgba(255, 99, 111, 0.5); /* Glow effect */
+}
+
+input[type="text"] {
+  border: 2px solid #f7a072; /* Light orange border */
+  border-radius: 8px; /* Rounded corners */
+  padding: 10px; /* Space inside the input */
+  width: 20%; /* Full-width input */
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  font-size: 1rem; /* Adjust font size */
+  outline: none; /* Remove default focus outline */
+}
+
+input[type="number"]:focus {
+  border-color: #ff6347; /* Highlight border when focused */
+  box-shadow: 0px 0px 8px rgba(255, 150, 111, 0.5); /* Glow effect */
+}
+
+
+h3 {
+  font-family: 'Comic Sans MS', cursive; /* Playful font */
+  color: #D20A2E; /* Vibrant red to match buttons */
+  text-align: center; /* Center the heading */
+  margin-bottom: 20px; /* Add spacing below */
+}
+
+.player-container {
+  background-color: #fff5e1; /* Light cream background */
+  border-radius: 10px; /* Rounded corners */
+  padding: 15px; /* Space inside the container */
+  margin: 10px 0; /* Spacing between player entries */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.player-container p {
+  font-size: 1.2em; /* Slightly larger font */
+  color: #333; /* Neutral text color */
+  margin: 5px 0; /* Space around the player's name */
+   text-align: left; 
+}
+
+label {
+  font-size: 1em; /* Standard font size */
+  color: #555; /* Muted color for the label */
+  display: block; /* Ensure label appears above the select dropdown */
+  margin-top: 10px; /* Space above the label */
+}
+
+select {
+  border: 2px solid #D20A2E; /* Match border with buttons */
+  border-radius: 8px; /* Rounded corners */
+  padding: 8px; /* Internal padding for comfort */
+  font-size: 1em; /* Comfortable font size */
+  background-color: #fff8e7; /* Subtle background color */
+  color: #333; /* Neutral text color */
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  width: 15%; /* Full-width dropdown */
+  outline: none; /* Remove default focus outline */
+}
+
+select:focus {
+  border-color: #ff6347; /* Highlight border when focused */
+  box-shadow: 0px 0px 8px rgba(255, 99, 71, 0.5); /* Glow effect */
+}

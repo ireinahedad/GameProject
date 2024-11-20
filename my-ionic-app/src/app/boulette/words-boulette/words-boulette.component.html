@@ -1,0 +1,12 @@
+<div>
+  <h1>Add Words</h1>
+  <div *ngIf="currentPlayer">
+    <h2>{{ currentPlayer.name }}'s turn</h2>
+  </div>
+  <input type="text" [(ngModel)]="newWord" placeholder="Enter a word" />
+  <button (click)="addWord()" class="button-box-small" >Enter</button>
+  
+  <p> there is {{ this.words.length }} words added </p>
+  
+</div>
+

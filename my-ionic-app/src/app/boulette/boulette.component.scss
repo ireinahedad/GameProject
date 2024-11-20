@@ -1,0 +1,10 @@
+.ion-justify-content-evenly {
+  display: flex; /* Ensure it's a flex container */
+  justify-content: space-between; /* Place elements at extremities */
+  align-items: center; /* Align elements vertically (optional) */
+  width: 100%; 
+}
+
+.ion-text-left{
+margin-right: 15%;
+}
