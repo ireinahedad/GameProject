@@ -14,7 +14,6 @@ export class FirstRoundComponent implements OnInit, OnDestroy {
   currentWord: string = '';
   currentTeam: number = 1;
   currentRound: number = 1;
-  showResult: boolean = false;
   timeLeft: number = 60;
   teamScores: { teamNumber: number; totalPoints: number }[] = [];
   timerSubscription!: Subscription;
@@ -39,7 +38,7 @@ export class FirstRoundComponent implements OnInit, OnDestroy {
   }
 
   startRound(): void {
-    this.showResults = true;
+
     this.timeLeft = this.wordsService.NumberOfWordsPerPerson * 15;
     this.guessedWords = [];
     this.missedWords = [];
@@ -67,14 +66,11 @@ export class FirstRoundComponent implements OnInit, OnDestroy {
       this.usedWords.add(index);
     } else {
       this.currentWord = 'All words used this round';
-      this.showResults =true; 
+      this.endRound();
+      //this.showResults =true; 
     }
   }
-    noShowResults(){
-      this.endRound();
-      
-  this.showResults = false;
-    }
+   
 
   gotWord(): void {
     this.guessedWords.push(this.currentWord); // Add to guessed words
@@ -87,13 +83,14 @@ export class FirstRoundComponent implements OnInit, OnDestroy {
     this.loadNextWord();
   }
 
-  addPointsToTeam(): void {
-    const players = this.playerService.getPlayers().filter(player => player.team === this.currentTeam);
-    players.forEach(player => {
-      const newPoints = player.points + 2;
-      this.playerService.updatePoints(player.name, newPoints);
-    });
+  async addPointsToTeam(): Promise<void> {
+  const players = this.playerService.getPlayers().filter(player => player.team === this.currentTeam);
+  for (const player of players) {
+    const newPoints = player.points + 2;
+    await this.playerService.updatePoints(player.name, newPoints);
   }
+}
+
 
   setnextRound(): void {
     this.wordsService.setCurrentRound(this.currentRound + 1);
@@ -101,21 +98,18 @@ export class FirstRoundComponent implements OnInit, OnDestroy {
 
   endRound(): void {
     this.timerSubscription.unsubscribe();
-    this.switchTeam();
     if (this.usedWords.size < this.words.length) {
       this.startRound();
+      this.switchTeam();
     } else {
       this.usedWords.clear();
       this.setnextRound();
     }
   }
 
-  calculateScores() {
-    this.teamScores = this.playerService.calculateTeamScores(this.numberOfTeams);
-  }
-
 
   switchTeam(): void {
     this.currentTeam = this.currentTeam % this.wordsService.numberOfTeams + 1;
+
   }
 }

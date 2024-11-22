@@ -19,7 +19,7 @@
         <div *ngFor="let player of players">
           <h2>{{ player.name }}</h2>
           <label for="teamSelect">Select Team:</label>
-          <select id="teamSelect" [(ngModel)]="player.team" (change)="assignTeam(player, player.team)">
+          <select id="teamSelect" [(ngModel)]="player.team" (ngModelChange)="assignTeam(player, player.team)">
             <option *ngFor="let team of [].constructor(numberOfTeams); let i = index" [value]="i + 1">
               Team {{ i + 1 }}
             </option>
@@ -51,7 +51,7 @@
 
   <div *ngSwitchCase="'round2-intro'">
     <p>ROUND 2</p>
-    <h4> here youll have to guess the words without using any words at all only mimics and no sound, you have 1 minute per team </h4>
+    <h4> here youll have to guess the words without using any words at all only mimics and no sound</h4>
     <button *ngIf="!gotIt" (click)="startRound()" class="button-box-small">GOT IT</button>
   </div>
 
@@ -70,20 +70,16 @@
   </div>
 
 
-  <div *ngSwitchCase="'round4-intro'">
-  <h2>Game Results</h2>
-  
-  <div *ngFor="let team of teamResults">
-    <h3>Team {{ team.teamNumber }}</h3>
-    <p>Total Points: {{ team.totalPoints }}</p>
-    <ul>
-      <li *ngFor="let player of team.players">
-        {{ player.name }}: {{ player.points }} points
-      </li>
-    </ul>
+  <div *ngSwitchCase="'result'">
+  <h2>Results</h2>
+  <div *ngFor="let team of teamScores" class="team-score">
+    <p>Team {{ team.teamNumber }}: {{ team.totalPoints }} points</p>
   </div>
-
-  <button class="button-box-small" (click)="resetGame()">Restart Game</button>
+  <div *ngIf="currentRound < 4">
+    <button (click)="toggleResultStage()">Next Round</button>
+  </div>
+  <div *ngIf="currentRound > 3">
+    <button (click)="resetGame()">End Game</button>
 </div>
  
   </div>

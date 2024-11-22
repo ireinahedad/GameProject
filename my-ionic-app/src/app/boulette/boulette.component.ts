@@ -16,6 +16,7 @@ export class BouletteComponent implements OnInit, OnDestroy {
   numberOfWords = 4;
   teamScores: { teamNumber: number; totalPoints: number }[] = [];
   currentStage: string = 'round0-intro';
+  currentRound: number = 0;
   gotIt: boolean = false
   roundSubscription!: Subscription;
 
@@ -33,8 +34,6 @@ export class BouletteComponent implements OnInit, OnDestroy {
     this.resetGame();
     this.roundSubscription = this.wordService.currentRound$.subscribe((round) => {
       this.refreshRoundComponent();
-      console.log('Round changed to:', this.currentStage);
-      console.log('players are:', this.players);
     });
   }
 
@@ -57,28 +56,36 @@ export class BouletteComponent implements OnInit, OnDestroy {
   }
 
   refreshRoundComponent() {
-    const currentRound = this.wordService.getCurrentRound();
-    this.currentStage = `round${currentRound}-intro`;
-    this.gotIt = false;
+    this.currentRound = this.wordService.getCurrentRound();
     this.calculateScores();
+    if (this.currentRound > 1) {
+      this.currentStage = 'result';
+      return;
+    }
+    this.currentStage = `round${this.currentRound}-intro`;
+  }
+
+  toggleResultStage() {
+    this.currentStage = `round${this.currentRound}-intro`;
+    this.gotIt = false;
   }
 
   startRound() {
-    this.gotIt = true;  // Set "GOT IT" to true when the user clicks it
+    this.gotIt = true;
     const currentRound = this.wordService.getCurrentRound();
-    this.currentStage = `round${currentRound}-play`;  // Move to the play stage
+    this.currentStage = `round${currentRound}-play`; 
   }
   
 
-  calculateScores() {
-    this.teamScores = this.playerService.calculateTeamScores(this.numberOfTeams);
-  }
-
-
+calculateScores() {
+  const updatedPlayers = this.playerService.getPlayers();
+  this.teamScores = this.playerService.calculateTeamScores(this.numberOfTeams);
+}
 
   resetGame(): void {
     this.wordService.resetRounds();
     this.gotIt = false;
     this.refreshRoundComponent();
+    this.playerService.resetPoints();
   }
 }

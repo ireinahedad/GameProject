@@ -70,20 +70,7 @@ export class PlayerComponent implements OnInit {
   this.errorMessage = ''; // Clear any previous error
 }
 
-calculateTeamScores(numberOfTeams: number): { teamNumber: number; totalPoints: number }[] {
-    const teamScores = Array.from({ length: numberOfTeams }, (_, i) => ({
-      teamNumber: i + 1,
-      totalPoints: 0,
-    }));
 
-    this.players.forEach(player => {
-      if (player.team >= 1 && player.team <= numberOfTeams) {
-        teamScores[player.team - 1].totalPoints += player.points;
-      }
-    });
-
-    return teamScores;
-  }
 
   async removePlayer(player: Player) {
     await this.playerService.removePlayer(player.id);

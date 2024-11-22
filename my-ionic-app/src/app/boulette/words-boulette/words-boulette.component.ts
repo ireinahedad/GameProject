@@ -42,19 +42,11 @@ addWord(): void {
         this.wordService.addWord(this.newWord);
         this.words = this.wordService.get(); 
         this.newWord = ''; 
-    }
-
- 
-    
-    console.log('this next id', this.currentPlayer.id);
-    
-    this.currentPlayer= this.players[(this.index+1 )% this.players.length];
-   
-    
-    console.log('this player', this.currentPlayer);
+    }    
+    this.index+=1;
+    this.currentPlayer= this.players[(this.index)% this.players.length];
     this.getPlayerClass(this.currentPlayer.id);
-    
-    // Check if the word limit per person is met
+
     if (this.words.length === this.players.length * this.wordService.NumberOfWordsPerPerson) {
         this.wordService.setReady(); 
     }
@@ -63,7 +55,7 @@ addWord(): void {
 
   removeWord(word: string): void {
     this.wordService.removeWord(word);
-    this.words = this.wordService.get(); // Update the words list
+    this.words = this.wordService.get();
   }
 
   getPlayerClass(playerId: number): string {

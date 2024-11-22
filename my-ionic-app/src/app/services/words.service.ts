@@ -60,7 +60,6 @@ export class WordsService {
   setCurrentRound(round: number) {
     this.currentRound +=1;
     this.currentRoundSubject.next(this.currentRound);
-    console.log('current round service', this.currentRound)
   }
 
   getCurrentRound(): number {

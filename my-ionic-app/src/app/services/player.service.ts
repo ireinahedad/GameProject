@@ -30,12 +30,10 @@ export class PlayerService {
     }
   }
 
-  // Save the players array to storage
   private async savePlayers() {
     await this.storage.set('players', this.players);
   }
 
-  // Get the list of players (ensure init has been called before accessing)
   getPlayers(): Player[] {
     return this.players;
   }
@@ -60,7 +58,23 @@ export class PlayerService {
       }
       return player;
     });
+    console.log("this player in uptade points player service", this.players)
     await this.savePlayers();
+  }
+
+  calculateTeamScores(numberOfTeams: number): { teamNumber: number; totalPoints: number }[] {
+    const teamScores = Array.from({ length: numberOfTeams }, (_, i) => ({
+      teamNumber: i + 1,
+      totalPoints: 0,
+    }));
+
+    this.players.forEach(player => {
+      if (player.team >= 1 && player.team <= numberOfTeams) {
+        teamScores[player.team - 1].totalPoints += player.points;
+      }
+    });
+
+    return teamScores;
   }
 
   // Assign a team to a player and save to storage
@@ -69,6 +83,15 @@ export class PlayerService {
       if (player.name === playername) {
         player.team = Number(team);  // Ensure team is a number
       }
+      return player;
+    });
+    await this.savePlayers();
+  }
+
+  // Reset all players to default points and save to storage
+  async resetPoints(): Promise<void> {
+    this.players = this.players.map(player => {
+      player.points = 0;
       return player;
     });
     await this.savePlayers();
