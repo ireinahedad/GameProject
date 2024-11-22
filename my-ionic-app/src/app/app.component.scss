@@ -1,15 +1,8 @@
 
-body {
-  display: flex;
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-  height: 100vh; /* Full viewport height */
-  margin: 0; /* Remove default body margin */
-  background-color: #f0f0f0; /* Optional background color */
-}
+
 
 .button-box {
-  width: 48%; /* Adjust width to fit two buttons per row with some space between */
+  width: 30%; /* Adjust width to fit two buttons per row with some space between */
   margin-bottom: 0px; /* Space between rows */
   display: flex;
   align-items: center;
@@ -51,20 +44,26 @@ body {
 }
 
 .button-box:nth-child(1) {
-  height: 190px;
-  background-color: #77D935; /* Example color */
+  margin: 5%;
+  height: 30%;
+  background-color: #D20A2E; /* Example color */
 }
 
 .button-box:nth-child(2) {
-  height: 230px;
-  background-color: #52B074; /* Example color */
+  padding: 2.5%;
+  height: 30%;
+  font-size: 2em;
+  background-color: #F21A1E; /* Example color */
 }
+
+
+
 
 input[type="number"] {
   border: 2px solid #f7a072; /* Light orange border */
   border-radius: 8px; /* Rounded corners */
   padding: 10px; /* Space inside the input */
-  width: 5%; /* Full-width input */
+  width:  20%;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow */
   font-size: 1.5rem; /* Adjust font size */
   text-align: center;
@@ -80,7 +79,7 @@ input[type="text"] {
   border: 2px solid #f7a072; /* Light orange border */
   border-radius: 8px; /* Rounded corners */
   padding: 10px; /* Space inside the input */
-  width: 20%; /* Full-width input */
+  width: 35%; 
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow */
   font-size: 1rem; /* Adjust font size */
   outline: none; /* Remove default focus outline */
@@ -129,9 +128,11 @@ select {
   background-color: #fff8e7; /* Subtle background color */
   color: #333; /* Neutral text color */
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  width: 15%; /* Full-width dropdown */
+  width:0 0 calc(50% - 10px);
   outline: none; /* Remove default focus outline */
 }
+
+
 
 select:focus {
   border-color: #ff6347; /* Highlight border when focused */

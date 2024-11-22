@@ -1,23 +1,17 @@
 
-<ion-header [translucent]="true">
+<ion-header [translucent]="true" slot="fixed">
   <ion-toolbar>
     <ion-title>
-      Blank
+      <h1> Boulette </h1>
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<h1> hellooooooooooooo</h1>
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    
-    
-  </div>
-</ion-content>
+<div class="ion-padding">
+  
+    <div class = "button-container">
+    <button routerLink="/player" class="button-box">Add New Player</button>
+    <button routerLink="/boulette" class="button-box">Play</button>
+    </div>
+ 
+</div>

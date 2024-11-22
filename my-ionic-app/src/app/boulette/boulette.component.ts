@@ -2,6 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Player } from './../interfaces/player-interface';
 import { PlayerService } from './../services/player.service';
 import { WordsService } from './../services/words.service';
+import { ModalController } from '@ionic/angular';
+import { ExplanationComponent } from './explanation/explanation.component';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -18,11 +20,14 @@ export class BouletteComponent implements OnInit, OnDestroy {
   currentStage: string = 'round0-intro';
   currentRound: number = 0;
   gotIt: boolean = false
+  showExplanation = false;
+  errorMessage: string = ''; 
   roundSubscription!: Subscription;
 
   constructor(
     private playerService: PlayerService,
-    private wordService: WordsService
+    private wordService: WordsService,
+    private modalController: ModalController
   ) {
   }
 
@@ -37,8 +42,12 @@ export class BouletteComponent implements OnInit, OnDestroy {
     });
   }
 
+ 
+  openModal() {
+    this.showExplanation = !this.showExplanation;
+  }
+
   ngOnDestroy() {
-    // Unsubscribe from the observable to prevent memory leaks
     if (this.roundSubscription) {
       this.roundSubscription.unsubscribe();
     }
@@ -50,6 +59,10 @@ export class BouletteComponent implements OnInit, OnDestroy {
   }
 
   chooseWords(): void {
+     if (!this.validateTeamAssignment()) {
+       console.log('pwoblem')
+    return;
+  }
     this.wordService.setNumberOfWords(this.numberOfWords);
     this.wordService.setnumberOfTeams(this.numberOfTeams);
     this.currentStage = 'words';
@@ -77,10 +90,29 @@ export class BouletteComponent implements OnInit, OnDestroy {
   }
   
 
-calculateScores() {
-  const updatedPlayers = this.playerService.getPlayers();
-  this.teamScores = this.playerService.calculateTeamScores(this.numberOfTeams);
-}
+  calculateScores() {
+    const updatedPlayers = this.playerService.getPlayers();
+    this.teamScores = this.playerService.calculateTeamScores(this.numberOfTeams);
+  }
+
+  validateTeamAssignment(): boolean {
+    const teamCounts = Array(this.numberOfTeams).fill(0);
+
+    this.players.forEach(player => {
+      if (player.team > 0) {
+        teamCounts[player.team - 1]++;
+      }
+    });
+    for (const count of teamCounts) {
+      if (count < 2) {
+        this.errorMessage = `Each team must have at least 2 players.`;
+        return false;
+      }
+    }
+    this.errorMessage = ''; 
+    return true;
+  }
+
 
   resetGame(): void {
     this.wordService.resetRounds();

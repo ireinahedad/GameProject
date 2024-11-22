@@ -8,3 +8,21 @@
 .ion-text-left{
 margin-right: 15%;
 }
+
+ion-modal {
+  z-index: 9999 !important;
+}
+
+
+.players-container {
+  display: flex;
+  flex-wrap: wrap;
+
+}
+
+.player-item {
+  flex: 0 0 calc(50% - 10px); /* Each player takes up 50% of the container width, with space between them */
+  margin-bottom: 15px;
+}
+
+

@@ -1,0 +1,47 @@
+.ion-padding{
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+   height: 50%;
+   text-color:#B5C9FA;
+   --background: #D20A2E;
+  --box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+  --border-radius: 20px;  
+}
+/* Style for the modal content */
+.modal-title {
+  font-size: 28px;
+  font-weight: bold;
+  text-align: center;
+  color: #FFF; /* Soft coral color for the title */
+  margin-bottom: 10px;
+}
+
+.modal-subtitle {
+  font-size: 18px;
+  font-weight: 500;
+  color: #B5C9FA;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.modal-paragraph {
+  font-size: 16px;
+  color: #B5C9FA;
+  line-height: 1.6;
+  margin-bottom: 12px;
+  text-align: justify;
+}
+
+.modal-time {
+  font-size: 18px;
+  font-weight: bold;
+  color: #C5D9FA; /* Matching color for emphasis */
+  text-align: center;
+  margin-top: 20px;
+}
+
+
+
+
+

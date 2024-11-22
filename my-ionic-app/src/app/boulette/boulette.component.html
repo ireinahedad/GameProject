@@ -4,10 +4,13 @@
 <div class="ion-text-center">
 <div class= "ion-justify-content-evenly">
   <button routerLink="/" class="button-box-small">Home </button>
-  <button routerLink="/" class="button-box-small" (click)= "resetGame()">Quit </button>
+  <button class="button-box-small" (click)= "resetGame()">Reset </button>
+  <ion-button (click)="openModal()">?</ion-button>
+  
 </div>
-
+<app-explanation *ngIf="showExplanation"></app-explanation> 
   <div [ngSwitch]="currentStage">
+  <div *ngIf='errorMessage'> {{ errorMessage }} </div>
  
     <div *ngSwitchCase="'round0-intro'">
       <h3>Number of teams</h3>
@@ -16,14 +19,16 @@
       <input type="number" [(ngModel)]="numberOfWords" />
       <div class ="ion-text-center">
         <h3>Players</h3>
-        <div *ngFor="let player of players">
-          <h2>{{ player.name }}</h2>
-          <label for="teamSelect">Select Team:</label>
-          <select id="teamSelect" [(ngModel)]="player.team" (ngModelChange)="assignTeam(player, player.team)">
-            <option *ngFor="let team of [].constructor(numberOfTeams); let i = index" [value]="i + 1">
-              Team {{ i + 1 }}
-            </option>
-          </select>
+       
+    <div class="players-container">
+      <div *ngFor="let player of players" class="player-item">
+        <h2>{{ player.name }}</h2>
+        <select id="teamSelect" [(ngModel)]="player.team" (ngModelChange)="assignTeam(player, player.team)">
+          <option *ngFor="let team of [].constructor(numberOfTeams); let i = index" [value]="i + 1">
+            Team {{ i + 1 }}
+          </option>
+        </select>
+      </div>
         </div>
       </div>
       <button class="button-box-small" (click)="chooseWords()" >Start</button>
