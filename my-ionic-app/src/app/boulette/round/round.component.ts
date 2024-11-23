@@ -8,7 +8,7 @@ import { Subscription, interval } from 'rxjs';
   templateUrl: './round.component.html',
   styleUrls: ['./round.component.scss', './../../app.component.scss']
 })
-export class FirstRoundComponent implements OnInit, OnDestroy {
+export class RoundComponent implements OnInit, OnDestroy {
   words: string[] = [];
   usedWords: Set<number> = new Set(); // Track indices of used words
   currentWord: string = '';
@@ -84,7 +84,7 @@ export class FirstRoundComponent implements OnInit, OnDestroy {
   }
 
   async addPointsToTeam(): Promise<void> {
-  const players = this.playerService.getPlayers().filter(player => player.team === this.currentTeam);
+  const players = await this.playerService.getPlayers().filter(player => player.team === this.currentTeam);
   for (const player of players) {
     const newPoints = player.points + 2;
     await this.playerService.updatePoints(player.name, newPoints);

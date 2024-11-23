@@ -34,7 +34,7 @@ export class PlayerService {
     await this.storage.set('players', this.players);
   }
 
-  getPlayers(): Player[] {
+   getPlayers(): Player[] {
     return this.players;
   }
 
@@ -51,14 +51,13 @@ export class PlayerService {
   }
 
   // Update points for a player and save to storage
-  async updatePoints(playername: string, points: number): Promise<void> {
-    this.players = this.players.map(player => {
-      if (player.name === playername) {
+  async updatePoints(player: Player, points: number): Promise<void> {
+    this.players = this.players.map(i => {
+      if (i === player) {
         player.points = points;
       }
       return player;
     });
-    console.log("this player in uptade points player service", this.players)
     await this.savePlayers();
   }
 
@@ -77,18 +76,16 @@ export class PlayerService {
     return teamScores;
   }
 
-  // Assign a team to a player and save to storage
-  async assignTeam(playername: string, team: any): Promise<void> {
-    this.players = this.players.map(player => {
-      if (player.name === playername) {
-        player.team = Number(team);  // Ensure team is a number
+  async assignTeam(player:Player, team: any): Promise<void> {
+    this.players = this.players.map(i => {
+      if (i === player) {
+        player.team = Number(team); 
       }
       return player;
     });
     await this.savePlayers();
   }
 
-  // Reset all players to default points and save to storage
   async resetPoints(): Promise<void> {
     this.players = this.players.map(player => {
       player.points = 0;

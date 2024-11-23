@@ -55,7 +55,7 @@ export class BouletteComponent implements OnInit, OnDestroy {
 
   assignTeam(player: Player, team: number): void {
     player.team = team;
-    this.playerService.assignTeam(player.name, team);
+    this.playerService.assignTeam(player, team);
   }
 
   chooseWords(): void {

@@ -8,7 +8,7 @@ import { Player } from './../interfaces/player-interface';
 })
 export class WordsService {
   private words: string[] = [];
-  NumberOfWordsPerPerson= 4;
+  numberOfWordsPerPerson= 4;
   numberOfTeams = 2;
   currentRound = 0;
    private currentRoundSubject = new BehaviorSubject<number>(this.currentRound);
@@ -47,10 +47,10 @@ export class WordsService {
   }
 
   setNumberOfWords(numberOfWords: number): void {
-    this.NumberOfWordsPerPerson = numberOfWords;
+    this.numberOfWordsPerPerson = numberOfWords;
   }
   setnumberOfTeams(numberOfTeams: number): void{
-    this.numberOfTeams = this.numberOfTeams;
+    this.numberOfTeams =numberOfTeams;
   }
 
   setReady(): void {

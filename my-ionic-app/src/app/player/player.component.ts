@@ -67,9 +67,8 @@ export class PlayerComponent implements OnInit {
 
   selectTeam(team: number) {
   this.newPlayer.team = team;
-  this.errorMessage = ''; // Clear any previous error
+  this.errorMessage = ''; 
 }
-
 
 
   async removePlayer(player: Player) {
