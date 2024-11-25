@@ -38,7 +38,7 @@ export class WordsService {
 
   async removeWord(word: string): Promise<void> {
     this.words = this.words.filter(w => w !== word);
-    await this.saveWords(); // Update Ionic Storage
+    await this.saveWords();
   }
 
   removeAllWords(): void {

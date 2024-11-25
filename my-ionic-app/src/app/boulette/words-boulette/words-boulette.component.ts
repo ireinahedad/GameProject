@@ -27,19 +27,13 @@ export class WordsBouletteComponent implements OnInit {
   async ngOnInit() {
   await this.playerService.init();
   this.wordService.removeAllWords();
-   this.words = this.wordService.get();
-  
-  console.log("this player 1", this.players)
-
+  this.words = this.wordService.get();
   this.players = this.playerService.getPlayers() ;
   
-  console.log("this player2", this.players)
-  // Ensure there are players before accessing their data
   if (this.players.length > 0) {
     this.currentPlayer = this.players[0];
     
   } else {
-    console.log("No players found after initialization--------------------------------------------");
     console.warn('No players found after initialization');
   }
 }
@@ -55,20 +49,10 @@ addWord(): void {
     }    
     this.index+=1;
     this.currentPlayer= this.players[(this.index)% this.players.length];
-    this.getPlayerClass(this.currentPlayer.id);
 
     if (this.words.length === this.players.length * this.wordService.numberOfWordsPerPerson) {
         this.wordService.setReady(); 
     }
 }
 
-
-  removeWord(word: string): void {
-    this.wordService.removeWord(word);
-    this.words = this.wordService.get();
-  }
-
-  getPlayerClass(playerId: number): string {
-    return this.players[playerId % this.players.length].name;
-  }
 }

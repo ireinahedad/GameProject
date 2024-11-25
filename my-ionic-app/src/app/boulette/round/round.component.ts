@@ -39,7 +39,7 @@ export class RoundComponent implements OnInit, OnDestroy {
 
   startRound(): void {
 
-    this.timeLeft = this.wordsService.NumberOfWordsPerPerson * 15;
+    this.timeLeft = this.wordsService.numberOfWordsPerPerson * 15;
     this.guessedWords = [];
     this.missedWords = [];
     this.loadNextWord();
@@ -87,7 +87,7 @@ export class RoundComponent implements OnInit, OnDestroy {
   const players = await this.playerService.getPlayers().filter(player => player.team === this.currentTeam);
   for (const player of players) {
     const newPoints = player.points + 2;
-    await this.playerService.updatePoints(player.name, newPoints);
+    await this.playerService.updatePoints(player, newPoints);
   }
 }
 
