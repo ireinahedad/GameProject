@@ -12,14 +12,15 @@ import { IonicStorageModule } from '@ionic/storage-angular';
 import { VoltageTableComponent } from './voltage-table/voltage-table.component';
 import { BouletteComponent } from './boulette/boulette.component';
 import { WordsBouletteComponent } from './boulette/words-boulette/words-boulette.component';
-import { FirstRoundComponent } from './boulette/round/round.component';
+import { RoundComponent } from './boulette/round/round.component';
 import { PlayerComponent } from './player/player.component';
 import {ExplanationComponent } from './boulette/explanation/explanation.component';
+import { EngineComponent } from './engine/engine.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 @NgModule({
-  declarations: [AppComponent, VoltageTableComponent, BouletteComponent, WordsBouletteComponent, PlayerComponent, FirstRoundComponent, ExplanationComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), IonicStorageModule.forRoot(), AppRoutingModule, FormsModule, CommonModule],
+  declarations: [AppComponent, VoltageTableComponent, BouletteComponent, WordsBouletteComponent, PlayerComponent, RoundComponent, ExplanationComponent],
+  imports: [BrowserModule, IonicModule.forRoot(), IonicStorageModule.forRoot(), AppRoutingModule, FormsModule, CommonModule, EngineComponent],
   providers: [ { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA] 
