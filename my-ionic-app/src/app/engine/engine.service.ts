@@ -1,4 +1,5 @@
 import { ElementRef, Injectable, NgZone } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   Color3,
   Color4,
@@ -12,7 +13,9 @@ import {
   Space,
   StandardMaterial,
   Texture,
-  Vector3
+  Vector3,
+  ActionManager,
+  ExecuteCodeAction 
 } from '@babylonjs/core';
 import { WindowRefService } from './../services/window-ref.service';
 
@@ -25,13 +28,18 @@ export class EngineService {
   private camera!: FreeCamera;
   private scene!: Scene;
   private light!: Light;
+  private light2!: Light;
+  private time: number = 0; 
 
   private sphere!: Mesh;
 
   public constructor(
     private ngZone: NgZone,
-    private windowRef: WindowRefService
+    private windowRef: WindowRefService,
+    
+    private router: Router
   ) {}
+
 
   public createScene(canvas: ElementRef<HTMLCanvasElement>): void {
     // The first step is to get the reference of the canvas element from our HTML document
@@ -42,10 +50,10 @@ export class EngineService {
 
     // create a basic BJS Scene object
     this.scene = new Scene(this.engine);
-    this.scene.clearColor = new Color4(0, 0, 0, 0);
+    this.scene.clearColor = new Color4(0.8, 0.9, 1, 1);
 
     // create a FreeCamera, and set its position to (x:5, y:10, z:-20 )
-    this.camera = new FreeCamera('camera1', new Vector3(5, 10, -20), this.scene);
+    this.camera = new FreeCamera('camera1', new Vector3(0, 100, -10), this.scene);
 
     // target the camera to scene origin
     this.camera.setTarget(Vector3.Zero());
@@ -55,14 +63,26 @@ export class EngineService {
 
     // create a basic light, aiming 0,1,0 - meaning, to the sky
     this.light = new HemisphericLight('light1', new Vector3(0, 1, 0), this.scene);
+    this.light.intensity = 1.5;
+    this.light2 = new HemisphericLight('light2', new Vector3(0, 0, 1), this.scene);
+    this.light2.intensity = 1.5;
 
     // create a built-in "sphere" shape; its constructor takes 4 params: name, subdivisions, radius, scene
-    this.sphere = Mesh.CreateSphere('sphere1', 16, 2, this.scene);
+    this.sphere = Mesh.CreateSphere('sphere1', 30 , 2, this.scene);
 
     // create the material with its texture for the sphere and assign it to the sphere
-    const spherMaterial = new StandardMaterial('sun_surface', this.scene);
-    spherMaterial.diffuseTexture = new Texture('assets/textures/sun.jpg', this.scene);
-    this.sphere.material = spherMaterial;
+    
+    const sphereMaterial = new StandardMaterial('paper_surface', this.scene);
+    sphereMaterial.diffuseTexture = new Texture('./../../assets/textures/paper_texture.png', this.scene);
+    sphereMaterial.bumpTexture = new Texture("./../../assets/textures/white-paper-texture-background.jpg" , this.scene);
+    sphereMaterial.bumpTexture.level = 1; // Increase relief intensity
+
+
+    sphereMaterial.invertNormalMapX = true;
+    sphereMaterial.invertNormalMapY = true;
+
+    this.sphere.material = sphereMaterial;
+    this.setCloudBackground();
 
     // move the sphere upward 1/2 of its height
     this.sphere.position.y = 1;
@@ -77,8 +97,30 @@ export class EngineService {
     });
 
     // generates the world x-y-z axis for better understanding
-    this.showWorldAxis(8);
+    //this.showWorldAxis(8);
+    this.sphere.actionManager = new ActionManager(this.scene);
+    this.sphere.actionManager.registerAction(
+      new ExecuteCodeAction(ActionManager.OnPickTrigger, () => {
+   
+        this.ngZone.run(() => {
+          this.router.navigate(['/boulette']); 
+        });
+      })
+    );
+  
+    this.scene.registerBeforeRender(() => {
+      this.moveAround();
+  });
   }
+  
+  public moveAround(): void {
+    this.time += 0.02;
+    this.sphere.position.x = 5 * Math.cos(this.time); // Radius of 5 on the X-axis
+    this.sphere.position.z = 2 * Math.sin(this.time); // Radius of 5 on the Z-axis
+    this.sphere.position.y = 2 * Math.sin(this.time); // Radius of 5 on the Z-axis
+
+  }
+
 
   public animate(): void {
     // We have to run this outside angular zones,
@@ -102,6 +144,28 @@ export class EngineService {
     });
   }
 
+
+  public setCloudBackground(): void {
+    const cloudPlane = Mesh.CreatePlane('cloudPlane', 100, this.scene);
+    cloudPlane.position.z = 25; // Position the plane far away to act as a background
+    cloudPlane.rotation.x = Math.PI / 2; // Align it with the background
+
+    // Apply a cloud texture to the plane
+    const cloudMaterial = new StandardMaterial('cloudMaterial', this.scene);
+    const cloudTexture = new Texture('assets/textures/fantastic-cloudscape.jpg', this.scene);
+    cloudMaterial.diffuseTexture = cloudTexture;
+    cloudMaterial.backFaceCulling = false; // Make it visible from all angles
+    cloudPlane.material = cloudMaterial;
+
+    // Animate the cloud texture to simulate movement
+    this.scene.registerBeforeRender(() => {
+      if (cloudMaterial.diffuseTexture) {
+       // cloudMaterial.diffuseTexture.uOffset += 0.001; // Horizontal scrolling
+      }
+    });
+  }
+
+
   /**
    * creates the world axes
    *
@@ -109,6 +173,7 @@ export class EngineService {
    *
    * @param size number
    */
+   /*
   public showWorldAxis(size: number): void {
 
     const makeTextPlane = (text: string, color: string, textSize: number) => {
@@ -168,4 +233,5 @@ export class EngineService {
     const zChar = makeTextPlane('Z', 'blue', size / 10);
     zChar.position = new Vector3(0, 0.05 * size, 0.9 * size);
   }
+  */
 }

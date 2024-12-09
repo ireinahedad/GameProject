@@ -31,7 +31,10 @@ html, body {
   background-color: var(--background-color);
 }
 
-
+body {
+  display: flex;
+  flex-direction: column;
+}
 
 
 :root {
@@ -58,6 +61,6 @@ padding: 0;
   flex-direction: column;
   justify-content: center; /* Center vertically */
   align-items: center;    /* Center horizontally, if needed */
-  height: 0vh;          /* Make sure it takes full viewport height */
+  height: 100vh;          /* Make sure it takes full viewport height */
   background-color: #B5C9FA;
 }

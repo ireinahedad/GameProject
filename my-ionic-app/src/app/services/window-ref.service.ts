@@ -18,4 +18,6 @@ export class WindowRefService {
   public get sessionStorage(): Storage {
     return this.window.sessionStorage;
   }
+
+  
 }
